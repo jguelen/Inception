@@ -8,8 +8,8 @@ RUN openssl req -x509 \
                     -days 365 \
                     -out /etc/nginx/ssl/inception.crt \
                     -keyout /etc/nginx/ssl/inception.key \
-                    -subj ""
-
+                    -subj "/C=FR/ST=normandy/L=Le Havre/O=42LH/CN=jguelen.42.fr" \
+                    -addext "subjectAltName=DNS:jguelen.42.fr,DNS:localhost"
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
