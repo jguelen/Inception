@@ -30,7 +30,7 @@ services:
     networks:
       - inception_network
     volumes:
-      - wordpress_db:/app/db
+      - wordpress_db:/var/lib/mysql
     healthcheck:
       test: ["executable", "arg"] #TODO
       interval: 30s
