@@ -13,9 +13,12 @@ services:
     ports:
       - "443:443"
     volumes:
-      - wordpress_files:/app #################################
+      - wordpress_files:/var/www/html
     networks:
-      - inception_network
+      wordpress:
+        condition: service-started
+    depends_on:
+      - 
     restart: always
   
 # ====================== MARIADB ======================
@@ -33,7 +36,7 @@ services:
     volumes:
       - wordpress_db:/var/lib/mysql
     healthcheck:
-      test: ["executable", "arg"] #TODO
+      test: ["CMD-SHELL", "mariadb -uroot -p$(cat /run/secrets/db_root_password) -e 'SELECT 1';"] 
       interval: 30s
       timeout: 10s
       retries: 5
@@ -88,3 +91,5 @@ secrets:
     file: secrets/db_password
   db_root_password:
     file: secrets/db_root_password
+  wp_password:
+    file: secrets/wp_password
