@@ -2,13 +2,17 @@ FROM debian:oldstable
 
 WORKDIR /
 
-RUN apt update && apt install -y mariadb-server mariadb-client
+RUN apt update && apt install -y mariadb-server mariadb-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /etc/mysql/
 
-COPY conf/mariadb.cnf /etc/mysql/mariadb.cnf
+COPY conf/mariadb.cnf /etc/mysql/mariadb.conf.d/mariadb.cnf
 COPY tools/entrypoint.sh .
+
+RUN chmod +x entrypoint.sh
 
 EXPOSE 3306
 
 ENTRYPOINT [ "entrypoint.sh" ]
 
-# CMD [ "mysql" ]
+CMD [ "mariadbd-safe", "--defaults-file=/etc/mysql/mariadb.conf/mariadb.cnf" ]

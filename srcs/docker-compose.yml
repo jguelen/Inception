@@ -1,5 +1,6 @@
 name: inception
 
+# ---------------------- SERVICES -----------------------
 services:
 # ======================= NGINX =======================
   nginx:
@@ -79,3 +80,11 @@ volumes:
       type: none
       o: bind
       device: /home/jguelen/data/wordpress_files
+
+# ---------------------- SECRETS ------------------------
+
+secrets:
+  db_password:
+    file: secrets/db_password
+  db_root_password:
+    file: secrets/db_root_password
