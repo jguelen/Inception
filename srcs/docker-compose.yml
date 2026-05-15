@@ -15,10 +15,12 @@ services:
     volumes:
       - wordpress_files:/var/www/html
     networks:
-      wordpress:
-        condition: service-started
+      - inception_network
     depends_on:
-      - 
+#      wordpress:
+#        condition: service-started
+      mariadb:
+        condition: service_healthy
     restart: always
   
 # ====================== MARIADB ======================
@@ -41,26 +43,29 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    secrets:
+      - db_password
+      - db_root_password
     restart: always
 
 # ====================== WORDPRESS ======================
-  wordpress:
-    container_name: wordpress
-    build:
-      context: requirements/wordpress
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    expose:
-      - 9000
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    networks:
-      - inception_network
-    volumes:
-      - wordpress_files:/app #################################
-    restart: always
+#  wordpress:
+#    container_name: wordpress
+#    build:
+#      context: requirements/wordpress
+#      dockerfile: Dockerfile
+#    env_file:
+#      - .env
+#    expose:
+#      - 9000
+#    depends_on:
+#      mariadb:
+#        condition: service_healthy
+#    networks:
+#      - inception_network
+#    volumes:
+#      - wordpress_files:/app #################################
+#    restart: always
 
 # ---------------------- NETWORKS -----------------------
 
@@ -88,8 +93,8 @@ volumes:
 
 secrets:
   db_password:
-    file: secrets/db_password
+    file: ../secrets/db_password
   db_root_password:
-    file: secrets/db_root_password
+    file: ../secrets/db_root_password
   wp_password:
-    file: secrets/wp_password
+    file: ../secrets/wp_password
