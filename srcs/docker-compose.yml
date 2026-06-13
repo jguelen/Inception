@@ -38,34 +38,34 @@ services:
     volumes:
       - database:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mariadb -uroot -p$$(cat /run/secrets/db_root_password) -e 'SELECT 1';"] 
-      interval: 30s
+      test: ["CMD-SHELL", "mariadb -uroot -p$(cat /run/secrets/db_root_password) -e 'SELECT 1';"] 
+      interval: 15s
       timeout: 10s
       retries: 5
-      start_period: 30s
+      start_period: 10s
     secrets:
       - db_password
       - db_root_password
     restart: always
 
 # ====================== WORDPRESS ======================
-#  wordpress:
-#    container_name: wordpress
-#    build:
-#      context: requirements/wordpress
-#      dockerfile: Dockerfile
-#    env_file:
-#      - .env
-#    expose:
-#      - 9000
-#    depends_on:
-#      mariadb:
-#        condition: service_healthy
-#    networks:
-#      - inception_network
-#    volumes:
-#      - wordpress_files:/app #################################
-#    restart: always
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    expose:
+      - 9000
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - inception_network
+    volumes:
+      - wordpress_files:/var/www/html
+    restart: always
 
 # ---------------------- NETWORKS -----------------------
 
@@ -81,7 +81,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/jguelen/data/wordpress_db 
+      device: /home/jguelen/data/database 
   wordpress_files:
     driver: local
     driver_opts:

@@ -2,7 +2,18 @@ NAME = inception
 DC = docker compose
 DC_FILE = srcs/docker-compose.yml
 
-all: up
+VOL_PATH = /home/jguelen/data
+WP_VOL_PATH = $(VOL_PATH)/wordpress_files
+MARIA_VOL_PATH = $(VOL_PATH)/database
+
+all: pre up
+
+pre:
+	mkdir -p $(VOL_PATH) $(WP_VOL_PATH) $(MARIA_VOL_PATH)
+	@line="127.0.0.1 jguelen.42.fr"; \
+	if !grep -qF "$$line" /etc/hosts; then \
+		echo "$$line" | tee -a /etc/hosts >/dev/null; \
+	fi
 
 up:
 	@if [ -f "srcs/.env" ]; then \
