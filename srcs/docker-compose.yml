@@ -36,9 +36,9 @@ services:
     networks:
       - inception_network
     volumes:
-      - wordpress_db:/var/lib/mysql
+      - database:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mariadb -uroot -p$(cat /run/secrets/db_root_password) -e 'SELECT 1';"] 
+      test: ["CMD-SHELL", "mariadb -uroot -p$$(cat /run/secrets/db_root_password) -e 'SELECT 1';"] 
       interval: 30s
       timeout: 10s
       retries: 5
@@ -76,7 +76,7 @@ networks:
 # ---------------------- VOLUMES ------------------------
 
 volumes:
-  wordpress_db:
+  database:
     driver: local
     driver_opts:
       type: none
