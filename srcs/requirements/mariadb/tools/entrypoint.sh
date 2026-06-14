@@ -12,6 +12,7 @@ else
     printf "Installing and initializing database\n"
     mariadb-install-db 
     ./database_init.sh&
+#    wait $!
 fi
 
 exec "$@"
