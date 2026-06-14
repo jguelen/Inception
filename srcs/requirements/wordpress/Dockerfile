@@ -5,9 +5,9 @@ WORKDIR /
 RUN apt update \
     && apt install -y \
     curl \
-    php php8.2-fpm php-mysql php-curl \
+    php php-mysql php-curl \
     php-gd php-intl php-mbstring php-soap php-xml \
-    php-xmlrpc php-zip \
+    php-xmlrpc php-zip php8.2-fpm\
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/log/php /var/run/php
 
@@ -17,7 +17,11 @@ RUN curl -O \
     && mv wp-cli.phar /usr/local/bin/wp
 
 COPY tools/* .
+COPY conf/php-fpm8.2.conf /etc/php-fpm.conf
 
-RUN chmod +x wp_entrypoint.sh
+RUN chmod +x entrypoint.sh wp_init.sh \
+    && chmod 644 /etc/php-fpm.conf
 
-ENTRYPOINT [ "wp_entrypoint.sh" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
+
+CMD [ "/usr/sbin/php-fpm8.2", "-F" ]
