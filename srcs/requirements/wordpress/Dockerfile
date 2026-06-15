@@ -8,6 +8,7 @@ RUN apt update \
     php php-mysql php-curl \
     php-gd php-intl php-mbstring php-soap php-xml \
     php-xmlrpc php-zip php8.2-fpm\
+    mariadb-client \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/log/php /var/run/php
 

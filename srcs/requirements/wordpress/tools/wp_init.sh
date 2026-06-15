@@ -14,23 +14,25 @@ WP_PATH=/var/www/html
 DB_HOST=mariadb
 
 # Mandatory
-printf "Downloading core..."
+printf "Downloading core...\n"
 wp core download \
 	--force \
 	--locale=fr_FR \
 	--path=$WP_PATH \
 	--allow-root
 
-printf "Creating new config file..."
+printf "Creating new config file...\n"
 wp config create \
 	--dbname=$DB_NAME \
-	--dbuser="$DB_USER" \
-	--dbpass="$DB_PASSWORD" \
+	--dbuser=$DB_USER \
+	--dbpass=$DB_PASSWORD \
 	--dbhost=$DB_HOST \
 	--path=$WP_PATH \
 	--allow-root
 
-printf "Installing wp core..."
+# wp config set WP_CONTENT_DIR "$WP_PATH" --allow-root
+
+printf "Installing wp core...\n"
 wp core install \
 	--url=$DOMAIN_NAME \
 	--title="$WP_TITLE" \
@@ -41,7 +43,7 @@ wp core install \
 	--path=$WP_PATH \
 	--allow-root
 
-printf "Creating WordPress user..."
+printf "Creating WordPress user...\n"
 wp user create \
 	"$USER_NAME" \
 	"$USER_EMAIL" \

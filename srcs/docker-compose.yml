@@ -14,6 +14,7 @@ services:
       - "443:443"
     volumes:
       - wordpress_files:/var/www/html
+#      - ./nginx_logs:/var/log/nginx
     networks:
       - inception_network
     depends_on:
@@ -70,6 +71,7 @@ services:
     secrets:
       - wp_admin_credentials
       - wp_user_credentials
+      - db_password
     restart: always
 
 # # ======================== REDIS ========================

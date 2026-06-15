@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "CREATE DATABASE IF NOT EXISTS `${DB_NAME}`;" > init.sql
-echo "CREATE USER IF NOT EXISTS `${DB_USER}`@'%' IDENTIFIED BY '$(cat /run/secrets/db_password)';" >> init.sql
-echo "GRANT ALL PRIVILEGES ON `${DB_NAME}`.* TO `${DB_USER}`@'%';" >> init.sql
+echo "CREATE DATABASE IF NOT EXISTS $DB_NAME;" > init.sql
+echo "CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '$(cat /run/secrets/db_password)';" >> init.sql
+echo "GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'%' IDENTIFIED BY '$(cat /run/secrets/db_password)';" >> init.sql
 echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat /run/secrets/db_root_password)';" >> init.sql
 echo "FLUSH PRIVILEGES;" >> init.sql
 
