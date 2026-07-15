@@ -53,3 +53,24 @@ wp user create \
 	--allow-root
 
 # Bonus
+printf "Installing redis as a plugin...\n"
+wp plugin install redis-cache \
+	--activate \
+	--path=$WP_PATH \
+	--allow-root
+
+wp config set WP_REDIS_PORT 6379\
+	--raw \
+	--type=constant \
+	--path=$WP_PATH \
+	--allow-root
+
+wp config set WP_REDIS_HOST redis\
+	--type=constant \
+	--path=$WP_PATH \
+	--allow-root
+
+printf "Enabling redis...\n"
+wp redis enable \
+	--path=$WP_PATH \
+	--allow-root	
