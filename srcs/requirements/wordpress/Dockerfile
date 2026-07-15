@@ -18,10 +18,12 @@ RUN curl -O \
     && mv wp-cli.phar /usr/local/bin/wp
 
 COPY tools/* .
-COPY conf/php-fpm8.2.conf /etc/php-fpm.conf
+# COPY conf/php-fpm8.2.conf /etc/php/8.2/fpm/php-fpm.conf
+COPY conf/php-fpm8.2.conf /etc/php/8.2/fpm/pool.d/www.conf
+
 
 RUN chmod +x entrypoint.sh wp_init.sh \
-    && chmod 644 /etc/php-fpm.conf
+    && chmod 644 /etc/php/8.2/fpm/pool.d/www.conf
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 

@@ -6,7 +6,7 @@ RUN apt update && apt install -y nginx openssl gettext-base \
     && rm -f /etc/nginx/default.conf \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /etc/nginx/ssl/ \ 
+RUN mkdir -p /etc/nginx/ssl/\ 
     && openssl req -x509 \
     -noenc \
     -days 365 \

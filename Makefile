@@ -53,10 +53,8 @@ reup: down all
 
 re: clean all
 
-rei: iclean all
-
 revi: viclean all
 
 ref: fclean all
 
-.PHONY: all up stop down vdown clean vclean viclean fclean reup rei revi re ref
+.PHONY: all up stop down vdown clean vclean viclean fclean reup revi re ref
