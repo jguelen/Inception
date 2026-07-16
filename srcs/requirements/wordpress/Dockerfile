@@ -18,7 +18,6 @@ RUN curl -O \
     && mv wp-cli.phar /usr/local/bin/wp
 
 COPY tools/* .
-# COPY conf/php-fpm8.2.conf /etc/php/8.2/fpm/php-fpm.conf
 COPY conf/php-fpm8.2.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 
