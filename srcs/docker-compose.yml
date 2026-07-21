@@ -14,7 +14,6 @@ services:
       - "443:443"
     volumes:
       - wordpress_files:/var/www/html
-#      - ./nginx_logs:/var/log/nginx
     networks:
       - inception_network
     depends_on:
@@ -22,8 +21,8 @@ services:
        condition: service_started
       mariadb:
         condition: service_healthy
-#       static_website:
-#         condition: service_started
+      static_website:
+        condition: service_started
     restart: always
   
 # ======================= MARIADB =======================
@@ -100,7 +99,7 @@ services:
     env_file:
       - .env
     ports:
-      - "20:20"
+#      - "20:20"
       - "21:21"
       - "30000-30009:30000-30009"
     secrets:
@@ -128,20 +127,20 @@ services:
 #     networks:
 #       - inception_network
 #     restart: unless-stopped
-# 
-# # =================== STATIC WEBSITE ====================
-#   static_website:
-#     container_name: static_website
-#     build:
-#       context: requirements/bonus/static_website
-#       dockerfile: Dockerfile
-#     env_file:
-#       - .env
-#     expose:
-#       - 5000
-#     networks:
-#       - inception_network
-#     restart: unless-stopped
+
+# =================== STATIC WEBSITE ====================
+  static_website:
+    container_name: static_website
+    build:
+      context: requirements/bonus/static_website
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    expose:
+      - 5000
+    networks:
+      - inception_network
+    restart: unless-stopped
 
 # # ====================== GLANCES ========================
 #   glances:

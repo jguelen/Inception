@@ -1,4 +1,5 @@
 #!/bin/bash
 
+printf "Launching static website...\n"
 
-printf "Launching Svelte...\n"
+exec "$@"
