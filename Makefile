@@ -6,7 +6,7 @@ VOL_PATH = /home/jguelen/data
 WP_VOL_PATH = $(VOL_PATH)/wordpress_files
 MARIA_VOL_PATH = $(VOL_PATH)/database
 
-all: pre up
+all: up
 
 pre:
 	mkdir -p $(VOL_PATH) $(WP_VOL_PATH) $(MARIA_VOL_PATH)
@@ -15,7 +15,7 @@ pre:
 		echo "\n$$line" | sudo tee -a /etc/hosts >/dev/null; \
 	fi
 
-up:
+up: pre
 	@if [ -f "srcs/.env" ]; then \
 		$(DC) -f $(DC_FILE) up; \
 	else \
@@ -36,18 +36,18 @@ clean:
 
 viclean:
 	$(DC) -f $(DC_FILE) down -v --rmi local
-	sudo rm -rf $(WP_VOL_PATH)/*
-	sudo rm -rf $(MARIA_VOL_PATH)/*
+	sudo rm -rf $(WP_VOL_PATH)
+	sudo rm -rf $(MARIA_VOL_PATH)
 
 vclean:
 	$(DC) -f $(DC_FILE) down -v
-	sudo rm -rf $(WP_VOL_PATH)/*
-	sudo rm -rf $(MARIA_VOL_PATH)/*
+	sudo rm -rf $(WP_VOL_PATH)
+	sudo rm -rf $(MARIA_VOL_PATH)
 
 fclean:
 	$(DC) -f $(DC_FILE) down -v --rmi all
-	sudo rm -rf $(WP_VOL_PATH)/*
-	sudo rm -rf $(MARIA_VOL_PATH)/*
+	sudo rm -rf $(WP_VOL_PATH)
+	sudo rm -rf $(MARIA_VOL_PATH)
 
 reup: down all
 

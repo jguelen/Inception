@@ -16,4 +16,4 @@ EXPOSE 3306
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "mariadbd-safe", "--defaults-file=/etc/mysql/mariadb.conf.d/mariadb.cnf" ]
+CMD [ "mariadbd-safe", "--defaults-file=/etc/mysql/mariadb.conf.d/mariadb.cnf", "--user=mysql" ]

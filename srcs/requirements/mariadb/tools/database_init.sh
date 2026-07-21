@@ -9,7 +9,10 @@ echo "FLUSH PRIVILEGES;" >> init.sql
 for i in {1..10}; do
     sleep 3
     #mariadb -uroot --protocol=socket < init.sql && printf "Successfully initiated database\n" && exit 0
-    mariadb -uroot < init.sql && printf "Successfully initiated database\n" && exit 0
+    mariadb -uroot < init.sql \
+        && printf "Successfully initiated database\n" \
+        && rm -f init.sql \
+        && exit 0
 done
 
 printf "Failed to create and init the Database\n"

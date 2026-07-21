@@ -1,18 +1,24 @@
 #!/bin/bash
 
-set -eux
+set -e
 
-chown -R mysql:mysql /var/log/mysql
-chown -R mysql:mysql /run/mysqld
+DATADIR="/var/lib/mysql"
+MARKER="$DATADIR/.mariadb_configured"
 
-# if [ -d "/var/lib/mysql/mysql" ] 
-# then
-#     printf "Database already exists. Skipping setup.\n"
-# else
+
+chown -R mysql:mysql /var/log/mysql /run/mysqld "$DATADIR"
+
+
+if [ -f "$MARKER" ]; then
+    printf "Database already configured. Skipping setup.\n"
+else
     printf "Installing and initializing database\n"
-    mariadb-install-db 
-    ./database_init.sh&
-#    wait $!
-# fi
+
+    if [ ! -d "$DATADIR/mysql" ] || [ -z "$(ls -A "$DATADIR/mysql" 2>/dev/null)" ]; then
+        mariadb-install-db --user=mysql --datadir="$DATADIR"
+    fi
+
+    (./database_init.sh && touch "$MARKER" && chown mysql:mysql "$MARKER") &
+fi
 
 exec "$@"
