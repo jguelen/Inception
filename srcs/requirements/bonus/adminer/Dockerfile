@@ -9,8 +9,7 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/www/adminer
 
-RUN curl -fsSL https://github.com/vrana/adminer/releases/download/v5.3.0/adminer-5.3.0.php \
-    -o /var/www/adminer/index.php
+RUN curl -fsSL https://www.adminer.org/latest-mysql-en.php -o /var/www/adminer/index.php
 
 COPY tools/entrypoint.sh .
 
