@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  # - job_name: "mariadb"
+  #   static_configs:
+  #     - targets: ["mysqld-exporter:9104"]
+
+  # - job_name: "redis"
+  #   static_configs:
+  #     - targets: ["redis-exporter:9121"]

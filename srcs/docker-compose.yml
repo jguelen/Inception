@@ -142,19 +142,99 @@ services:
       - inception_network
     restart: unless-stopped
 
-# # ====================== GLANCES ========================
-#   glances:
-#     container_name: glances
+# ===================== PROMETHEUS ======================
+  prometheus:
+    container_name: prometheus
+    build:
+      context: requirements/bonus/prometheus
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - prometheus-volume:/prometheus
+    expose:
+      - 9090
+    networks:
+      - inception_network
+    restart: always
+
+# ====================== GRAFANA ========================
+  grafana:
+    container_name: grafana
+    build:
+      context: requirements/bonus/grafana
+      dockerfile: Dockerfile
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    secrets:
+      - grafana-admin-pass
+    expose:
+      - 3000
+    networks:
+      - inception_network
+    restart: unless-stopped
+
+# ====================== CADVISOR =======================
+  cadvisor:
+    container_name: cadvisor
+    build:
+      context: requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+    privileged: true
+    expose:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    networks:
+      - inception_network
+    restart: unless-stopped
+
+# # =================== NODE-EXPORTER =====================
+#   node-exporter:
+#     container_name: node-exporter
 #     build:
-#       context: requirements/bonus/glances
+#       context: requirements/bonus/node-exporter
+#       dockerfile: Dockerfile
+#     expose:
+#       - 9100
+#     networks:
+#       - inception_network
+#     restart: unless-stopped
+# 
+# # ================== MYSQLD-EXPORTER ====================
+#   mysqld-exporter:
+#     container_name: mysqld-exporter
+#     build:
+#       context: requirements/bonus/mysqld-exporter
 #       dockerfile: Dockerfile
 #     env_file:
 #       - .env
 #     expose:
-#       - ###
+#       - 9104
+#     secrets:
+#       - 
 #     networks:
 #       - inception_network
-#     restart: always
+#     restart: unless-stopped
+# 
+# # ====================== REDIS-EXPORTER =======================
+#   redis-exporter:
+#     container_name: redis-exporter
+#     build:
+#       context: requirements/bonus/redis-exporter
+#       dockerfile: Dockerfile
+#     expose:
+#       - 9121
+#     networks:
+#       - inception_network
+#     restart: unless-stopped
+# 
 
 # ---------------------- NETWORKS -----------------------
 
@@ -177,6 +257,9 @@ volumes:
       type: none
       o: bind
       device: /home/jguelen/data/wordpress_files
+  prometheus-volume:
+  grafana-storage:
+
 
 # ---------------------- SECRETS ------------------------
 
@@ -191,3 +274,5 @@ secrets:
     file: ../secrets/wp_admin_credentials
   ftp_credentials:
     file: ../secrets/ftp_credentials
+  grafana-admin-pass:
+    file: ../secrets/grafana-admin-password
