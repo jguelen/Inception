@@ -17,7 +17,6 @@ RUN apt update \
     && chown -R grafana:grafana /usr/share/grafana /etc/grafana /var/lib/grafana /var/log/grafana \
     && rm -rf /tmp/grafana*
     
-##    && cp -a /tmp/grafana-v${GRAFANA_VERSION}/* /usr/share/grafana/ \
 COPY conf/grafana.ini /etc/grafana/grafana.ini
 
 COPY conf/provisioning /etc/grafana/provisioning
