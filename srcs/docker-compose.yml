@@ -198,17 +198,21 @@ services:
       - inception_network
     restart: unless-stopped
 
-# # =================== NODE-EXPORTER =====================
-#   node-exporter:
-#     container_name: node-exporter
-#     build:
-#       context: requirements/bonus/node-exporter
-#       dockerfile: Dockerfile
-#     expose:
-#       - 9100
-#     networks:
-#       - inception_network
-#     restart: unless-stopped
+# =================== NODE-EXPORTER =====================
+  node-exporter:
+    container_name: node-exporter
+    build:
+      context: requirements/bonus/node-exporter
+      dockerfile: Dockerfile
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host:ro,rslave
+    expose:
+      - 9100
+    networks:
+      - inception_network
+    restart: unless-stopped
 
 # ================== MYSQLD-EXPORTER ====================
   mysqld-exporter:
