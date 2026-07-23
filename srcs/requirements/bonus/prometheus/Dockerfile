@@ -24,4 +24,4 @@ EXPOSE 9090
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "prometheus", "--config.file=//etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus" ]
+CMD [ "prometheus", "--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus" ]

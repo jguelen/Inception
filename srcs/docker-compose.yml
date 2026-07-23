@@ -165,8 +165,10 @@ services:
     build:
       context: requirements/bonus/grafana
       dockerfile: Dockerfile
-#     volumes:
-#       - grafana-storage:/var/lib/grafana
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - prometheus
     secrets:
       - grafana-admin-pass
     expose:
@@ -227,18 +229,20 @@ services:
       - inception_network
     restart: unless-stopped
 
-# # ====================== REDIS-EXPORTER =======================
-#   redis-exporter:
-#     container_name: redis-exporter
-#     build:
-#       context: requirements/bonus/redis-exporter
-#       dockerfile: Dockerfile
-#     expose:
-#       - 9121
-#     networks:
-#       - inception_network
-#     restart: unless-stopped
-# 
+# ====================== REDIS-EXPORTER =======================
+  redis-exporter:
+    container_name: redis-exporter
+    build:
+      context: requirements/bonus/redis-exporter
+      dockerfile: Dockerfile
+    expose:
+      - 9121
+    depends_on:
+      - redis
+    networks:
+      - inception_network
+    restart: unless-stopped
+
 
 # ---------------------- NETWORKS -----------------------
 
@@ -262,7 +266,7 @@ volumes:
       o: bind
       device: /home/jguelen/data/wordpress_files
   prometheus-volume:
-#  grafana-storage:
+  grafana-storage:
 
 
 # ---------------------- SECRETS ------------------------

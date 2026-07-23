@@ -14,7 +14,7 @@ echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
 
 mkdir -p /etc/vsftpd
 
-grep -qxF "$FTP_USER" || echo "$FTP_USER" >> /etc/vsftpd/user_list
+grep -qxF "$FTP_USER" /etc/vsftpd/user_list || echo "$FTP_USER" >> /etc/vsftpd/user_list
 
 mkdir -p /etc/ssl/private
 if [ ! -f /etc/ssl/private/vsftpd.pem ]; then

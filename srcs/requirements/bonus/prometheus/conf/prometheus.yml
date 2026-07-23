@@ -13,10 +13,9 @@ scrape_configs:
       - targets: ["cadvisor:8080"]
 
   - job_name: "mariadb"
-    metrics_path: /probe
     static_configs:
       - targets: ["mysqld-exporter:9104"]
 
-  # - job_name: "redis"
-  #   static_configs:
-  #     - targets: ["redis-exporter:9121"]
+  - job_name: "redis"
+    static_configs:
+      - targets: ["redis-exporter:9121"]

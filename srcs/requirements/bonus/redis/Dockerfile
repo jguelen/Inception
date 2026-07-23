@@ -12,4 +12,9 @@ RUN chmod +x entrypoint.sh
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "redis-server", "--bind 0.0.0.0", "--port 6379", "--protected-mode no" ]
+CMD [ "redis-server", \
+    "--bind", "0.0.0.0", \
+    "--port", "6379", \
+    "--protected-mode", "no", \
+    "--maxmemory", "256mb", \
+    "--maxmemory-policy", "allkeys-lru"]

@@ -19,5 +19,5 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 9104
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/local/bin/mysqld_exporter", "--config.my-cnf=/etc/mysqld-exporter/.my.cnf"]

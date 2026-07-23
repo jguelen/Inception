@@ -1,5 +1,7 @@
 #!/bin/bash
 
-printf "Launching redis...\n"
+set -e
+
+printf "Launching redis-exporter...\n"
 
 exec "$@"
