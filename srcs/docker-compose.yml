@@ -165,8 +165,8 @@ services:
     build:
       context: requirements/bonus/grafana
       dockerfile: Dockerfile
-    volumes:
-      - grafana-storage:/var/lib/grafana
+#     volumes:
+#       - grafana-storage:/var/lib/grafana
     secrets:
       - grafana-admin-pass
     expose:
@@ -262,7 +262,7 @@ volumes:
       o: bind
       device: /home/jguelen/data/wordpress_files
   prometheus-volume:
-  grafana-storage:
+#  grafana-storage:
 
 
 # ---------------------- SECRETS ------------------------
