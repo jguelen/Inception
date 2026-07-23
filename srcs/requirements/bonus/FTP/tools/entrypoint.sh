@@ -14,6 +14,8 @@ echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
 
 mkdir -p /etc/vsftpd
 
+touch /etc/vsftpd/user_list
+
 grep -qxF "$FTP_USER" /etc/vsftpd/user_list || echo "$FTP_USER" >> /etc/vsftpd/user_list
 
 mkdir -p /etc/ssl/private
@@ -22,6 +24,7 @@ if [ ! -f /etc/ssl/private/vsftpd.pem ]; then
     -keyout /etc/ssl/private/vsftpd.pem \
     -out /etc/ssl/private/vsftpd.pem \
     -subj "/C=FR/ST=Normandy/L=Le Havre/O=42/CN=jguelen.42.fr"
+    chmod 600 /etc/ssl/private/vsftpd.pem
 fi
 
 exec "$@"
