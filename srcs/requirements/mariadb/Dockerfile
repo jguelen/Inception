@@ -2,6 +2,8 @@ FROM debian:oldstable
 
 WORKDIR /
 
+STOPSIGNAL SIGINT
+
 RUN apt update && apt install -y mariadb-server mariadb-client \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /etc/mysql/mariadb.conf.d /var/log/mysql /run/mysqld \
@@ -16,4 +18,6 @@ EXPOSE 3306
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "mariadbd-safe", "--defaults-file=/etc/mysql/mariadb.conf.d/mariadb.cnf", "--user=mysql" ]
+CMD [ "mariadbd-safe", \
+"--defaults-file=/etc/mysql/mariadb.conf.d/mariadb.cnf", \
+ "--user=mysql" ]

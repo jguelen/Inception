@@ -48,6 +48,7 @@ services:
     secrets:
       - db_password
       - db_root_password
+      - db_ro_credentials
     restart: always
 
 # ====================== WORDPRESS ======================
@@ -206,23 +207,26 @@ services:
 #     networks:
 #       - inception_network
 #     restart: unless-stopped
-# 
-# # ================== MYSQLD-EXPORTER ====================
-#   mysqld-exporter:
-#     container_name: mysqld-exporter
-#     build:
-#       context: requirements/bonus/mysqld-exporter
-#       dockerfile: Dockerfile
-#     env_file:
-#       - .env
-#     expose:
-#       - 9104
-#     secrets:
-#       - 
-#     networks:
-#       - inception_network
-#     restart: unless-stopped
-# 
+
+# ================== MYSQLD-EXPORTER ====================
+  mysqld-exporter:
+    container_name: mysqld-exporter
+    build:
+      context: requirements/bonus/mysqld-exporter
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    expose:
+      - 9104
+    secrets:
+      - db_ro_credentials
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - inception_network
+    restart: unless-stopped
+
 # # ====================== REDIS-EXPORTER =======================
 #   redis-exporter:
 #     container_name: redis-exporter
@@ -268,6 +272,8 @@ secrets:
     file: ../secrets/db_password
   db_root_password:
     file: ../secrets/db_root_password
+  db_ro_credentials:
+    file: ../secrets/db_ro_user_credentials
   wp_user_credentials:
     file: ../secrets/wp_user_credentials
   wp_admin_credentials:
