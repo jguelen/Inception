@@ -190,7 +190,9 @@ services:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
-      - /var/lib/docker:/var/lib/docker:ro
+#      - /var/lib/docker:/var/lib/docker:ro
+      - /home/jguelen/data/docker:/var/lib/docker:ro
+      - /home/jguelen/data/docker:/home/jguelen/data/docker:ro
       - /dev/disk:/dev/disk:ro
     devices:
       - /dev/kmsg
@@ -258,17 +260,17 @@ networks:
 
 volumes:
   database:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/jguelen/data/database 
+#    driver: local
+#    driver_opts:
+#      type: none
+#      o: bind
+#      device: /home/jguelen/data/database 
   wordpress_files:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/jguelen/data/wordpress_files
+#    driver: local
+#    driver_opts:
+#      type: none
+#      o: bind
+#      device: /home/jguelen/data/wordpress_files
   prometheus-volume:
   grafana-storage:
 

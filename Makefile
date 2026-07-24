@@ -36,18 +36,18 @@ clean:
 
 viclean:
 	$(DC) -f $(DC_FILE) down -v --rmi local
-	sudo rm -rf $(WP_VOL_PATH)
-	sudo rm -rf $(MARIA_VOL_PATH)
+#	sudo rm -rf $(WP_VOL_PATH)
+#	sudo rm -rf $(MARIA_VOL_PATH)
 
 vclean:
 	$(DC) -f $(DC_FILE) down -v
-	sudo rm -rf $(WP_VOL_PATH)
-	sudo rm -rf $(MARIA_VOL_PATH)
+#	sudo rm -rf $(WP_VOL_PATH)
+#	sudo rm -rf $(MARIA_VOL_PATH)
 
 fclean:
 	$(DC) -f $(DC_FILE) down -v --rmi all
-	sudo rm -rf $(WP_VOL_PATH)
-	sudo rm -rf $(MARIA_VOL_PATH)
+#	sudo rm -rf $(WP_VOL_PATH)
+#	sudo rm -rf $(MARIA_VOL_PATH)
 
 reup: down all
 
