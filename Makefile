@@ -9,7 +9,8 @@ MARIA_VOL_PATH = $(VOL_PATH)/database
 all: up
 
 pre:
-	mkdir -p $(VOL_PATH) $(WP_VOL_PATH) $(MARIA_VOL_PATH)
+	mkdir -p $(VOL_PATH) 
+#    mkdir - p $(WP_VOL_PATH) $(MARIA_VOL_PATH)
 	@line="127.0.0.1 jguelen.42.fr"; \
 	if ! grep -qF "$$line" /etc/hosts; then \
 		echo "\n$$line" | sudo tee -a /etc/hosts >/dev/null; \
@@ -17,7 +18,7 @@ pre:
 
 up: pre
 	@if [ -f "srcs/.env" ]; then \
-		$(DC) -f $(DC_FILE) up; \
+		$(DC) -f $(DC_FILE) up -d; \
 	else \
 		echo "Error: a .env file is required"; \
 	fi
